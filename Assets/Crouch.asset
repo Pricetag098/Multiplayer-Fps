@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04189511d2982c545a70a43a66ff8da0, type: 3}
+  m_Name: Crouch
+  m_EditorClassIdentifier: 
+  gcCheckDist: 0.61
+  gcRad: 0.4
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  camHeight: 0.5
+  camRotX: 9.95
+  maxSpeed: 10
+  acceleration: 5
+  counterForce: 10
+  controlForce: 10
+  jumpForce: 800
+  running: {fileID: 11400000, guid: cc273d356c963a94ca32d2579532fb54, type: 2}
+  inAir: {fileID: 11400000, guid: 0f8e04065a9d48645a56fbce235add5c, type: 2}
+  slide: {fileID: 11400000, guid: 980fad70a8be78f46863f35a8bf0cf51, type: 2}
+  inputDir: {x: 0, y: 1}

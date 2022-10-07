@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838f080abb5065949a3c25f71933cca5, type: 3}
+  m_Name: WallRun
+  m_EditorClassIdentifier: 
+  gcCheckDist: 0.61
+  gcRad: 0.4
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  camHeight: 1
+  camRotX: 5.399966
+  entryBoost: 300
+  gravityScale: 3
+  checkDist: 2
+  minMvSpeed: 0
+  maxFallSpeed: 39.2
+  stickForce: 1.28
+  exitVel: {x: 100, y: 600, z: 100}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  inAir: {fileID: 11400000, guid: 1fdfd095887756246b645b80f74cb7b5, type: 2}
+  running: {fileID: 11400000, guid: cc273d356c963a94ca32d2579532fb54, type: 2}
