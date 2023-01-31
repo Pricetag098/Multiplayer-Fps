@@ -18,14 +18,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   camHeight: 1
-  camRotX: 5.399966
+  camRotX: 17.549894
   entryBoost: 300
   gravityScale: 3
   checkDist: 2
   minMvSpeed: 0
   maxFallSpeed: 39.2
   stickForce: 1.28
-  exitVel: {x: 100, y: 600, z: 100}
+  exitVel: {x: 100, y: 1200, z: 100}
   wallLayer:
     serializedVersion: 2
     m_Bits: 1

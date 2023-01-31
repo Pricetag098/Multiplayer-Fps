@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UpDraft : MonoBehaviour
 {
-    public float force;
+    public float force,control;
     List<Rigidbody> rigidbodies = new List<Rigidbody>();
     // Start is called before the first frame update
     void Start()
@@ -38,6 +38,10 @@ public class UpDraft : MonoBehaviour
         foreach(Rigidbody rb in rigidbodies)
         {
             rb.AddForce(transform.up * force * Time.fixedDeltaTime);
+
+            //Vector3 contDir = rb.position - transform.position;
+            //contDir.y = 0;
+            //rb.AddForce(-contDir.normalized * Mathf.Pow(Vector3.Distance(rb.transform.position,transform.position),2) * control * Time.fixedDeltaTime);
         }
     }
 
