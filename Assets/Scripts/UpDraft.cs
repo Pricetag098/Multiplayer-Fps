@@ -37,7 +37,15 @@ public class UpDraft : MonoBehaviour
     {
         foreach(Rigidbody rb in rigidbodies)
         {
-            rb.AddForce(transform.up * force * Time.fixedDeltaTime);
+            if(rb != null)
+            {
+                rb.AddForce(transform.up * force * Time.fixedDeltaTime);
+            }
+            else
+            {
+                rigidbodies.Remove(rb);
+            }
+            
 
             //Vector3 contDir = rb.position - transform.position;
             //contDir.y = 0;

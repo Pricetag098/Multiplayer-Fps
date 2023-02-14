@@ -8,9 +8,12 @@ namespace MoveStates
 	[CreateAssetMenu(fileName = "MvState", menuName = "MoveStates/WallRun")]
 	public class MsWallRun : MoveState
 	{
+        [SerializeField] float coolDown = 1;
         [SerializeField] float entryBoost;
 		[SerializeField] float gravityScale;
         [SerializeField] float checkDist;
+        [SerializeField] float runSpeed;
+        [SerializeField] float runForce;
         [SerializeField] float minMvSpeed;
         [SerializeField] float maxFallSpeed;
         [SerializeField] float stickForce;
@@ -20,7 +23,8 @@ namespace MoveStates
         [SerializeField] MoveState inAir;
         [SerializeField] MoveState running;
         Vector3 fwd,side;
-
+        float distToWall = 0;
+        float lastTimeUsed = 0;
         bool jump;
 		public override void EnterState()
 		{
@@ -32,6 +36,7 @@ namespace MoveStates
         }
 		public override void StateUpdate()
 		{
+            
 			ControlCamera();
 			if (IsGrounded())
 			{
@@ -45,26 +50,31 @@ namespace MoveStates
                 //do not invert for left
 
                 //todo: add a check for vertical walls
-                fwd = -Vector3.Cross(hit.normal, Vector3.up);
+                Vector3 outWall = player.transform.position-hit.collider.ClosestPoint(player.transform.position);
+                distToWall = Vector3.Distance(player.transform.position, hit.collider.ClosestPoint(player.transform.position));
+                fwd = -Vector3.Cross(outWall, Vector3.up);
                 
                 fwd = fwd.normalized;
 
 
 
-                side = -hit.normal;
+                side = -outWall;
                 side.y = 0;
                 side = side.normalized;
                 
             }
             else if (Physics.Raycast(player.transform.position, -player.transform.right, out hit, checkDist,wallLayer))
             {
-                fwd = Vector3.Cross(hit.normal, Vector3.up);
+
+                Vector3 outWall = player.transform.position - hit.collider.ClosestPoint(player.transform.position);
+                distToWall = Vector3.Distance(player.transform.position, hit.collider.ClosestPoint(player.transform.position));
+                fwd = Vector3.Cross(outWall, Vector3.up);
                 fwd.y = 0;
                 fwd = fwd.normalized;
 
 
 
-                side = -hit.normal;
+                side = -outWall;
                 side.y = 0;
                 side = side.normalized;
                 
@@ -83,19 +93,29 @@ namespace MoveStates
 			{
                 jump = true;
 			}
-
+            
+            
         }
 
 		public override void StateFixedUpdate()
 		{
-            player.rb.AddForce(side * stickForce);
+            player.rb.AddForce(side * (player.rb.velocity.sqrMagnitude/(stickForce)));
             player.rb.AddForce(Vector3.down * gravityScale);
 			if (jump)
 			{
-                player.rb.AddForce(Vector3.up * exitVel.y + -side*exitVel.x + fwd * exitVel.z);
+                player.rb.AddForce(Vector3.up * exitVel.y + -side*(exitVel.x + player.rb.velocity.sqrMagnitude/(stickForce)) + fwd * exitVel.z);
                 player.ChangeState(inAir);
+                lastTimeUsed = Time.time;
             }
-		}
+            Vector3 horizontalVel = player.rb.velocity;
+            horizontalVel.y = 0;
+            float vRel = Vector3.Dot(fwd, horizontalVel);
+            //Debug.Log(vRel);
+            if (vRel < runSpeed)
+            {
+                player.rb.AddForce(fwd * runForce * Input.GetAxisRaw("Vertical"));
+            }
+        }
 		public override void OnExitState()
 		{
             jump = false;
