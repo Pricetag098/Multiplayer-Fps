@@ -21,6 +21,6 @@ MonoBehaviour:
   camRotX: -0.0000036805868
   gravityScale: 78.4
   jumpForce: 1600
-  inAir: {fileID: 11400000, guid: 0f8e04065a9d48645a56fbce235add5c, type: 2}
-  running: {fileID: 11400000, guid: cc273d356c963a94ca32d2579532fb54, type: 2}
-  crouch: {fileID: 11400000, guid: a53cf4689b083ce48906b738694129aa, type: 2}
+  inAir: 4
+  running: 0
+  crouch: 3

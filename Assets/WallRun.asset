@@ -32,5 +32,5 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 1
-  inAir: {fileID: 11400000, guid: 1fdfd095887756246b645b80f74cb7b5, type: 2}
-  running: {fileID: 11400000, guid: cc273d356c963a94ca32d2579532fb54, type: 2}
+  inAir: 4
+  running: 0

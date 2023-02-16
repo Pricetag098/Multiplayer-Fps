@@ -24,7 +24,7 @@ MonoBehaviour:
   counterForce: 10
   controlForce: 10
   jumpForce: 1600
-  running: {fileID: 11400000, guid: cc273d356c963a94ca32d2579532fb54, type: 2}
-  inAir: {fileID: 11400000, guid: 0f8e04065a9d48645a56fbce235add5c, type: 2}
-  slide: {fileID: 11400000, guid: 980fad70a8be78f46863f35a8bf0cf51, type: 2}
+  running: 0
+  inAir: 4
+  slide: 1
   inputDir: {x: 0, y: 0}

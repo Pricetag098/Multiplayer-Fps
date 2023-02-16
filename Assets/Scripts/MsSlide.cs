@@ -9,21 +9,21 @@ namespace MoveStates
 	{
 		[SerializeField] float gravityScale = 9.8f * 8;
 		[SerializeField] float jumpForce = 800;
-
-		[SerializeField] MoveState inAir;
-		[SerializeField] MoveState running;
-		[SerializeField] MoveState crouch;
+		[Header("States")]
+		[SerializeField] int inAir;
+		[SerializeField] int running;
+		[SerializeField] int crouch;
 		
 		bool jump = false;
 		public override void EnterState()
 		{
-			CapsuleCollider col = player.GetComponent<CapsuleCollider>();
+			CapsuleCollider col = player.col;
 			col.height = 1;
 			col.center = new Vector3(0, -0.5f, 0);
 
 			if (!Input.GetKey(KeyCode.LeftControl))
 			{
-				player.ChangeState(running);
+				player.ChangeState(player.moveStates[running]);
 			}
 		}
 
@@ -31,12 +31,12 @@ namespace MoveStates
 		{
 			if (!IsGrounded())
 			{
-				player.ChangeState(inAir);
+				player.ChangeState(player.moveStates[inAir]);
 			}
 			ControlCamera();
 			if (!Input.GetKey(KeyCode.LeftControl))
 			{
-				player.ChangeState(running);
+				player.ChangeState(player.moveStates[running]);
 			}
 			if (Input.GetKey(KeyCode.Space))
 			{
@@ -51,7 +51,7 @@ namespace MoveStates
 			if (jump)
 			{
 				player.rb.AddForce(Vector3.up * jumpForce);
-				player.ChangeState(inAir);
+				player.ChangeState(player.moveStates[inAir]);
 				
 			}
 		}
@@ -59,7 +59,7 @@ namespace MoveStates
 
 		public override void OnExitState()
 		{
-			CapsuleCollider col = player.GetComponent<CapsuleCollider>();
+			CapsuleCollider col = player.col;
 			col.height = 2;
 			col.center = new Vector3(0, 0, 0);
 			jump = false;

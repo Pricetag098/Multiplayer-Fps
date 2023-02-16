@@ -19,9 +19,9 @@ namespace MoveStates
         [SerializeField] float stickForce;
         [SerializeField] Vector3 exitVel;
         [SerializeField] LayerMask wallLayer;
-
-        [SerializeField] MoveState inAir;
-        [SerializeField] MoveState running;
+        [Header("States")]
+        [SerializeField] int inAir;
+        [SerializeField] int running;
         Vector3 fwd,side;
         float distToWall = 0;
         float lastTimeUsed = 0;
@@ -40,7 +40,7 @@ namespace MoveStates
 			ControlCamera();
 			if (IsGrounded())
 			{
-				player.ChangeState(running);
+				player.ChangeState(player.moveStates[running]);
 			}
 
             RaycastHit hit;
@@ -81,13 +81,13 @@ namespace MoveStates
             }
 			else
 			{
-                player.ChangeState(inAir);
+                player.ChangeState(player.moveStates[inAir]);
             }
             Vector3 vel = player.rb.velocity;
             vel.y = 0;
             if (player.rb.velocity.y > maxFallSpeed || vel.magnitude < minMvSpeed)
             {
-                player.ChangeState(inAir);
+                player.ChangeState(player.moveStates[inAir]);
             }
 			if (Input.GetKey(KeyCode.Space))
 			{
@@ -104,7 +104,7 @@ namespace MoveStates
 			if (jump)
 			{
                 player.rb.AddForce(Vector3.up * exitVel.y + -side*(exitVel.x + player.rb.velocity.sqrMagnitude/(stickForce)) + fwd * exitVel.z);
-                player.ChangeState(inAir);
+                player.ChangeState(player.moveStates[inAir]);
                 lastTimeUsed = Time.time;
             }
             Vector3 horizontalVel = player.rb.velocity;

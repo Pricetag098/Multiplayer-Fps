@@ -14,9 +14,10 @@ namespace MoveStates
 		[SerializeField] float controlForce = 10;
 		[SerializeField] float jumpForce = 800;
 
-		[SerializeField] MoveState running;
-		[SerializeField] MoveState inAir;
-		[SerializeField] MoveState slide;
+		[Header("States")]
+		[SerializeField] int running;
+		[SerializeField] int inAir;
+		[SerializeField] int slide;
 
 
 		float cfConst = 40;
@@ -27,30 +28,30 @@ namespace MoveStates
 
 		public override void EnterState()
 		{
-			CapsuleCollider col = player.GetComponent<CapsuleCollider>();
+			CapsuleCollider col = player.col;
 			col.height = 1;
 			col.center = new Vector3(0, -0.5f, 0);
 
 			if (!Input.GetKey(KeyCode.LeftControl))
 			{
-				player.ChangeState(running);
+				player.ChangeState(player.moveStates[running]);
 			}
 			Vector3 vel = player.rb.velocity;
 			vel.y = 0;
 			if (vel.magnitude > maxSpeed)
 			{
-				player.ChangeState(slide);
+				player.ChangeState(player.moveStates[slide]);
 			}
 			if (!IsGrounded())
 			{
-				player.ChangeState(inAir);
+				player.ChangeState(player.moveStates[inAir]);
 			}
 		}
 		public override void StateUpdate()
 		{
 			if (!IsGrounded())
 			{
-				player.ChangeState(inAir);
+				player.ChangeState(player.moveStates[inAir]);
 			}
 			inputDir.y = Input.GetAxisRaw("Vertical");
 			inputDir.x = Input.GetAxisRaw("Horizontal");
@@ -64,11 +65,11 @@ namespace MoveStates
 			vel.y = 0;
 			if (vel.magnitude > maxSpeed)
 			{
-				player.ChangeState(slide);
+				player.ChangeState(player.moveStates[slide]);
 			}
 			if (!Input.GetKey(KeyCode.LeftControl))
 			{
-				player.ChangeState(running);
+				player.ChangeState(player.moveStates[running]);
 			}
 
 
@@ -84,7 +85,7 @@ namespace MoveStates
 			if (jump)
 			{
 				player.rb.AddForce(Vector3.up * jumpForce);
-				player.ChangeState(inAir);
+				player.ChangeState(player.moveStates[inAir]);
 			}
 
 			if (inputDir.sqrMagnitude > 0)
@@ -191,7 +192,7 @@ namespace MoveStates
 		public override void OnExitState()
 		{
 			jump = false;
-			CapsuleCollider col = player.GetComponent<CapsuleCollider>();
+			CapsuleCollider col = player.col;
 			col.height = 1;
 			col.center = new Vector3(0, -0.5f, 0);
 		}

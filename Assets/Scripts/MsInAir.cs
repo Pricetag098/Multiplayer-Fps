@@ -14,16 +14,19 @@ namespace MoveStates
 		[SerializeField] float wrMinMvSpeed;
 		[SerializeField] float wrMaxFallSpeed = 9.8f*4;
 		[SerializeField] LayerMask wallLayer = 1;
+		
 
-		[SerializeField] MoveState running;
-		[SerializeField] MoveState wallRun;
+		
 
 		[SerializeField] float colOffset = 0;
 		[SerializeField] float colHeight = 2;
-
+		[Header("States")]
+		[SerializeField] int running;
+		[SerializeField] int wallRun;
 		public override void EnterState()
 		{
-			CapsuleCollider col = player.GetComponent<CapsuleCollider>();
+			
+			CapsuleCollider col = player.col;
 			col.height = colHeight;
 			col.center = Vector3.up * colOffset;
 		}
@@ -31,7 +34,7 @@ namespace MoveStates
 		{
 			if (IsGrounded())
 			{
-				player.ChangeState(running);
+				player.ChangeState(player.moveStates[running]);
 			}
 			ControlCamera();
 
@@ -43,7 +46,7 @@ namespace MoveStates
 				vel.y = 0;
 				if (player.rb.velocity.y < wrMaxFallSpeed || vel.magnitude > wrMinMvSpeed)
 				{
-					player.ChangeState(wallRun);
+					player.ChangeState(player.moveStates[wallRun]);
 				}
 			}
 			
@@ -56,7 +59,7 @@ namespace MoveStates
 
 		public override void OnExitState()
 		{
-			CapsuleCollider col = player.GetComponent<CapsuleCollider>();
+			CapsuleCollider col = player.col;
 			col.height = 2;
 			col.center = new Vector3(0, 0, 0);
 		}

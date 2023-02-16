@@ -26,7 +26,7 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 1
-  running: {fileID: 11400000, guid: a53cf4689b083ce48906b738694129aa, type: 2}
-  wallRun: {fileID: 11400000, guid: 49e48aefa1551164798cbb0044d15ed3, type: 2}
   colOffset: -0.5
   colHeight: 1
+  running: 0
+  wallRun: 2

@@ -7,11 +7,18 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] MoveState state;
     public Rigidbody rb;
     public Transform cam;
+    public CapsuleCollider col;
 
-    
+    [Header("States")]
+    public List<MoveState> moveStates = new List<MoveState>();
+   
     // Start is called before the first frame update
     void Start()
     {
+        for(int i = 0; i < moveStates.Count; i++)
+		{
+            moveStates[i] = Instantiate(moveStates[i]);
+		}
         if (state != null)
         {
             state.OnEnterState(this);

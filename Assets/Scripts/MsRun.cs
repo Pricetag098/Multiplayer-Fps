@@ -13,12 +13,13 @@ namespace MoveStates
 		[SerializeField] float counterForce;
 		[SerializeField] float controlForce;
 		[SerializeField] float jumpForce;
-
-		[SerializeField] MoveState inAir;
-		[SerializeField] MoveState crouch;
+		[Header("States")]
+		[SerializeField] int inAir;
+		[SerializeField] int crouch;
 
 
 		float cfConst = 40;
+		[HideInInspector]
 		public Vector2 inputDir = Vector2.zero;
 
 		
@@ -28,7 +29,7 @@ namespace MoveStates
 		{
 			if (!IsGrounded())
 			{
-				player.ChangeState(inAir);
+				player.ChangeState(player.moveStates[inAir]);
 			}
 			if (Input.GetKey(KeyCode.Space))
 			{
@@ -36,14 +37,14 @@ namespace MoveStates
 			}
 			if (Input.GetKey(KeyCode.LeftControl))
 			{
-				player.ChangeState(crouch);
+				player.ChangeState(player.moveStates[crouch]);
 			}
 		}
 		public override void StateUpdate()
 		{
 			if (!IsGrounded())
 			{
-				player.ChangeState(inAir);
+				player.ChangeState(player.moveStates[inAir]);
 			}
 			inputDir.y = Input.GetAxisRaw("Vertical");
 			inputDir.x = Input.GetAxisRaw("Horizontal");
@@ -55,7 +56,7 @@ namespace MoveStates
 			}
 			if (Input.GetKey(KeyCode.LeftControl))
 			{
-				player.ChangeState(crouch);
+				player.ChangeState(player.moveStates[crouch]);
 			}
 
 
@@ -72,7 +73,7 @@ namespace MoveStates
 			if (jump)
 			{
 				player.rb.AddForce(Vector3.up * jumpForce);
-				player.ChangeState(inAir);
+				player.ChangeState(player.moveStates[inAir]);
 			}
 
 			if(inputDir.sqrMagnitude > 0)

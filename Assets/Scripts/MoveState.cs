@@ -48,6 +48,7 @@ namespace MoveStates
 		public float camRotX = 0;
 		public virtual void ControlCamera()
 		{
+			if(player.cam == null) return;
 			player.cam.position = player.transform.position + Vector3.up* camHeight;
 			camRotX = Mathf.Clamp(-Input.GetAxisRaw("Mouse Y") + camRotX, -90, 90);
 			player.cam.rotation = Quaternion.Euler(camRotX, player.cam.rotation.eulerAngles.y + Input.GetAxisRaw("Mouse X"), player.cam.rotation.eulerAngles.z);

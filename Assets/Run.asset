@@ -24,6 +24,6 @@ MonoBehaviour:
   counterForce: 5
   controlForce: 20
   jumpForce: 1600
-  inAir: {fileID: 11400000, guid: 1fdfd095887756246b645b80f74cb7b5, type: 2}
-  crouch: {fileID: 11400000, guid: a53cf4689b083ce48906b738694129aa, type: 2}
+  inAir: 4
+  crouch: 3
   inputDir: {x: 0, y: 0}

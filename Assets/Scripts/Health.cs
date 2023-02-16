@@ -1,19 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Health : MonoBehaviour
+using Mirror;
+public class Health : NetworkBehaviour
 {
-    public float health = 100, maxHealth = 100;
-
+    [SyncVar]public float health = 100, maxHealth = 100;
+    [SerializeField]RagDoller ragDoller;
     
-
+    [Command(requiresAuthority = false)]
     public void TakeDmg(float dmg)
     {
+        
         health -= dmg;
         if(health < 0)
         {
-            GetComponent<RagDoller>().RagDoll();
+            RpcDie();
         }
+    }
+    [ClientRpc]
+    public void RpcDie()
+	{
+        if (ragDoller != null)
+		{
+            ragDoller.RagDoll();
+		}
     }
 }
