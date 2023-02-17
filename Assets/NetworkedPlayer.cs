@@ -6,6 +6,7 @@ public class NetworkedPlayer : NetworkBehaviour
 {
     public GameObject clientBody;
     public GameObject serverBody;
+    public GameObject cam;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,12 @@ public class NetworkedPlayer : NetworkBehaviour
         GetComponent<GrenadeThrow>().enabled = isLocalPlayer;
         clientBody.SetActive(isLocalPlayer);
         serverBody.SetActive(!isLocalPlayer);
+        
     }
+	private void OnDestroy()
+	{
+		Destroy(cam);
+	}
 
 
 }

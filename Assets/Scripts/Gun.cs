@@ -21,6 +21,7 @@ public class Gun : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
             {
+                Debug.Log(hit.collider.gameObject.name);
                 if (hit.collider.gameObject.GetComponent<HitBox>())
                 {
                     hit.collider.gameObject.GetComponent<HitBox>().OnHit(dmg);

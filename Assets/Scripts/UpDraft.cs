@@ -19,7 +19,7 @@ public class UpDraft : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Rigidbody rb = other.GetComponent<Rigidbody>();
+        Rigidbody rb = other.GetComponentInParent<Rigidbody>();
         if(rb != null)
         {
             rigidbodies.Add(rb);
@@ -27,7 +27,7 @@ public class UpDraft : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        Rigidbody rb = other.GetComponent<Rigidbody>();
+        Rigidbody rb = other.GetComponentInParent<Rigidbody>();
         if (rb != null)
         {
             rigidbodies.Remove(rb);

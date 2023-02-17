@@ -15,6 +15,8 @@ public class Health : NetworkBehaviour
         if(health < 0)
         {
             RpcDie();
+            if(GetComponent<PlayerMove>()!=null)
+            DisableMv(GetComponent<NetworkIdentity>().connectionToClient);
         }
     }
     [ClientRpc]
@@ -25,4 +27,10 @@ public class Health : NetworkBehaviour
             ragDoller.RagDoll();
 		}
     }
+
+    [TargetRpc]
+    void DisableMv(NetworkConnection target)
+	{
+        GetComponent<PlayerMove>().enabled = false;
+	}
 }
