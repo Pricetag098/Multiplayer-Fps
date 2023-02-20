@@ -1532,6 +1532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53705231e09c79c44ae05384f30069b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 3887925534491183491}
 --- !u!114 &3887925534491183488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1549,6 +1550,7 @@ MonoBehaviour:
   syncInterval: 0.1
   health: 100
   maxHealth: 100
+  respawnTimer: 5
   ragDoller: {fileID: 3887925534491183490}
 --- !u!114 &3887925534491183495
 MonoBehaviour:

@@ -25,6 +25,6 @@ MonoBehaviour:
   controlForce: 10
   jumpForce: 1600
   running: 0
-  inAir: 4
+  inAir: 5
   slide: 1
   inputDir: {x: 0, y: 0}

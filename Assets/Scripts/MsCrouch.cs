@@ -162,7 +162,7 @@ namespace MoveStates
 			Vector3 vel = rb.velocity;
 			//	vel.y = 0;
 			vel = -vel;
-			rb.AddForce(vel * scale);
+			rb.AddForce(vel * scale * Time.fixedDeltaTime);
 			if (Mathf.RoundToInt(rb.velocity.sqrMagnitude) == 0)
 			{
 				rb.velocity = Vector3.zero;

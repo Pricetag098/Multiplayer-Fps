@@ -27,8 +27,8 @@ MonoBehaviour:
   runForce: 20
   minMvSpeed: 0
   maxFallSpeed: 39.2
-  stickForce: 5
-  exitVel: {x: 100, y: 1200, z: 100}
+  stickForce: 10
+  exitVel: {x: 1000, y: 1200, z: 1500}
   wallLayer:
     serializedVersion: 2
     m_Bits: 1

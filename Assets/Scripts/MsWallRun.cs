@@ -43,17 +43,34 @@ namespace MoveStates
 				player.ChangeState(player.moveStates[running]);
 			}
 
+            
+            Vector3 vel = player.rb.velocity;
+            vel.y = 0;
+            if (player.rb.velocity.y > maxFallSpeed || vel.magnitude < minMvSpeed)
+            {
+                player.ChangeState(player.moveStates[inAir]);
+            }
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+                jump = true;
+			}
+            
+            
+        }
+
+		public override void StateFixedUpdate()
+		{
             RaycastHit hit;
-            if (Physics.Raycast(player.transform.position, player.transform.right, out hit, checkDist,wallLayer))
+            if (Physics.Raycast(player.transform.position, player.transform.right, out hit, checkDist, wallLayer))
             {
                 //calculate the fwd vect
                 //do not invert for left
 
                 //todo: add a check for vertical walls
-                Vector3 outWall = player.transform.position-hit.collider.ClosestPoint(player.transform.position);
+                Vector3 outWall = player.transform.position - hit.collider.ClosestPoint(player.transform.position);
                 distToWall = Vector3.Distance(player.transform.position, hit.collider.ClosestPoint(player.transform.position));
                 fwd = -Vector3.Cross(outWall, Vector3.up);
-                
+
                 fwd = fwd.normalized;
 
 
@@ -61,9 +78,9 @@ namespace MoveStates
                 side = -outWall;
                 side.y = 0;
                 side = side.normalized;
-                
+
             }
-            else if (Physics.Raycast(player.transform.position, -player.transform.right, out hit, checkDist,wallLayer))
+            else if (Physics.Raycast(player.transform.position, -player.transform.right, out hit, checkDist, wallLayer))
             {
 
                 Vector3 outWall = player.transform.position - hit.collider.ClosestPoint(player.transform.position);
@@ -77,35 +94,22 @@ namespace MoveStates
                 side = -outWall;
                 side.y = 0;
                 side = side.normalized;
-                
+
             }
-			else
-			{
-                player.ChangeState(player.moveStates[inAir]);
-            }
-            Vector3 vel = player.rb.velocity;
-            vel.y = 0;
-            if (player.rb.velocity.y > maxFallSpeed || vel.magnitude < minMvSpeed)
+            else
             {
                 player.ChangeState(player.moveStates[inAir]);
             }
-			if (Input.GetKey(KeyCode.Space))
-			{
-                jump = true;
-			}
-            
-            
-        }
-
-		public override void StateFixedUpdate()
-		{
+            if(Vector3.Dot(side,player.rb.velocity) > -1)
             player.rb.AddForce(side * (player.rb.velocity.sqrMagnitude/(stickForce)));
             player.rb.AddForce(Vector3.down * gravityScale);
 			if (jump)
 			{
-                player.rb.AddForce(Vector3.up * exitVel.y + -side*(exitVel.x + player.rb.velocity.sqrMagnitude/(stickForce)) + fwd * exitVel.z);
-                player.ChangeState(player.moveStates[inAir]);
+                player.rb.AddForce((Vector3.up * exitVel.y + -side*(exitVel.x + player.rb.velocity.sqrMagnitude/(stickForce)) + fwd * exitVel.z));
                 lastTimeUsed = Time.time;
+                jump = false;
+                player.ChangeState(player.moveStates[inAir]);
+                
             }
             Vector3 horizontalVel = player.rb.velocity;
             horizontalVel.y = 0;

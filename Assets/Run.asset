@@ -21,7 +21,7 @@ MonoBehaviour:
   camRotX: -6.900098
   maxSpeed: 40
   acceleration: 30
-  counterForce: 5
+  counterForce: 50
   controlForce: 20
   jumpForce: 1600
   inAir: 4

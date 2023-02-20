@@ -48,7 +48,7 @@ namespace MoveStates
 			}
 			inputDir.y = Input.GetAxisRaw("Vertical");
 			inputDir.x = Input.GetAxisRaw("Horizontal");
-			//inputDir = inputDir.normalized;
+			inputDir = inputDir.normalized;
 			
 			if (Input.GetKey(KeyCode.Space))
 			{
@@ -78,66 +78,68 @@ namespace MoveStates
 
 			if(inputDir.sqrMagnitude > 0)
 			{
-				Vector3 moveDir = player.transform.forward * inputDir.y * acceleration + player.transform.right * inputDir.x * acceleration;
-				
-				Vector3 idealVel = moveDir.normalized * maxSpeed;
-				Vector3 vel = player.rb.velocity;
-				idealVel.y = 0;
-				//cap the force so velocity stays below max
-				if (Mathf.Sign(moveDir.x) == 1)
-				{
-					
-					if (vel.x + moveDir.x > idealVel.x)
-					{
-						moveDir.x = Mathf.Clamp(idealVel.x - vel.x,0,float.PositiveInfinity);
-					}
-				}
-				else
-				{
-					
-					if (vel.x + moveDir.x < idealVel.x)
-					{
-						moveDir.x = Mathf.Clamp(idealVel.x - vel.x, float.NegativeInfinity, 0);
-					}
-					
-				}
-				if (Mathf.Sign(moveDir.z) == 1)
-				{
-					
-					if (vel.z + moveDir.z > idealVel.z)
-					{
-						moveDir.z = Mathf.Clamp(idealVel.z - vel.z, 0, float.PositiveInfinity);
-					}
-					
-				}
-				else
-				{
-					
-					if (vel.z + moveDir.z < idealVel.z)
-					{
-						moveDir.z = Mathf.Clamp(idealVel.z - vel.z, float.NegativeInfinity, 0);
-					}
-					
-				}
-				moveDir.y = 0;
-				player.rb.AddForce(moveDir);
-				
+                Vector3 moveDir = player.transform.forward * inputDir.y * acceleration + player.transform.right * inputDir.x * acceleration;
 
-				//Counter Sliding and increase overall control
-				vel.y = 0;
+                Vector3 idealVel = moveDir.normalized * maxSpeed;
+                Vector3 vel = player.rb.velocity;
+                idealVel.y = 0;
+                //cap the force so velocity stays below max
+                if (Mathf.Sign(moveDir.x) == 1)
+                {
 
-				Vector3 inputVel = moveDir.normalized * vel.magnitude;
+                    if (vel.x + moveDir.x > idealVel.x)
+                    {
+                        moveDir.x = Mathf.Clamp(idealVel.x - vel.x, 0, float.PositiveInfinity);
+                    }
+                }
+                else
+                {
 
-				Vector3 counterVel = -(vel - inputVel);
-				
-				counterVel.y = 0;
-				
-				float cfScale = Vector3.Distance(vel, inputVel) / cfConst;
-				player.rb.AddForce(counterVel * controlForce);
+                    if (vel.x + moveDir.x < idealVel.x)
+                    {
+                        moveDir.x = Mathf.Clamp(idealVel.x - vel.x, float.NegativeInfinity, 0);
+                    }
 
-				totalForce = moveDir + counterVel;
-			}
-			else
+                }
+                if (Mathf.Sign(moveDir.z) == 1)
+                {
+
+                    if (vel.z + moveDir.z > idealVel.z)
+                    {
+                        moveDir.z = Mathf.Clamp(idealVel.z - vel.z, 0, float.PositiveInfinity);
+                    }
+
+                }
+                else
+                {
+
+                    if (vel.z + moveDir.z < idealVel.z)
+                    {
+                        moveDir.z = Mathf.Clamp(idealVel.z - vel.z, float.NegativeInfinity, 0);
+                    }
+
+                }
+                moveDir.y = 0;
+                player.rb.AddForce(moveDir);
+
+
+                //Counter Sliding and increase overall control
+                vel.y = 0;
+
+                Vector3 inputVel = moveDir.normalized * vel.magnitude;
+
+                Vector3 counterVel = -(vel - inputVel);
+
+                counterVel.y = 0;
+
+                float cfScale = Vector3.Distance(vel, inputVel) / cfConst;
+                player.rb.AddForce(counterVel * controlForce);
+
+                totalForce = moveDir + counterVel;
+
+
+            }
+            else
 			{
 				ApplyCounterForce(player.rb, counterForce);
 			}
@@ -185,6 +187,10 @@ namespace MoveStates
 		
 	}
 }
+
+
+
+
 
 
 /*----------------------------------------------- Move Script graveyard -----------------------------------------------*/
@@ -405,4 +411,10 @@ namespace MoveStates
 			}
 			
 
-		}*/
+		}
+
+ 
+ 
+ 
+ 
+ */
