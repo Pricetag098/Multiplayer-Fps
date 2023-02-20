@@ -26,18 +26,19 @@ public class NetworkedPlayer : NetworkBehaviour
         clientBody.SetActive(isLocalPlayer);
         serverBody.SetActive(!isLocalPlayer);
         gun.enabled = isLocalPlayer;
-        if (isServer)
-        {
-            SetName(playerNameStr);
-        }
+        CmdGetName();
     }
-    
+    [Command(requiresAuthority = false)]
+    void CmdGetName()
+	{
+        RpcGetName(playerNameStr);
+	}
     [ClientRpc]
-    void SetName(string name)
-    {
-        playerNameStr = name;
+    void RpcGetName(string nme)
+	{
+        playerNameStr = nme;
         playerName.text = playerNameStr;
-    }
+	}
 	private void OnDestroy()
 	{
 		Destroy(cam);
