@@ -9,7 +9,7 @@ namespace MoveStates
 	public class MoveState : ScriptableObject
 	{
 		protected PlayerMove player;
-
+		public static float sensitivity =1;
 		[SerializeField] protected float gcCheckDist = .61f;
 		[SerializeField] protected float gcRad = .4f;
 		[SerializeField] protected LayerMask groundLayer = 1;
@@ -50,8 +50,8 @@ namespace MoveStates
 		{
 			if(player.cam == null) return;
 			player.cam.position = player.transform.position + Vector3.up* camHeight;
-			camRotX = Mathf.Clamp(-Input.GetAxisRaw("Mouse Y") + camRotX, -90, 90);
-			player.cam.rotation = Quaternion.Euler(camRotX, player.cam.rotation.eulerAngles.y + Input.GetAxisRaw("Mouse X"), player.cam.rotation.eulerAngles.z);
+			camRotX = Mathf.Clamp(-Input.GetAxisRaw("Mouse Y") * sensitivity + camRotX, -90, 90);
+			player.cam.rotation = Quaternion.Euler(camRotX, player.cam.rotation.eulerAngles.y + Input.GetAxisRaw("Mouse X") * sensitivity, player.cam.rotation.eulerAngles.z);
 			player.transform.rotation = Quaternion.Euler(0, player.cam.rotation.eulerAngles.y, 0);
 		}
 

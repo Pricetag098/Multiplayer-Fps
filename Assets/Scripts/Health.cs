@@ -7,14 +7,25 @@ public class Health : NetworkBehaviour
     [SyncVar]public float health = 100, maxHealth = 100;
     [SerializeField] float respawnTimer = 5;
     [SerializeField]RagDoller ragDoller;
-    
+    public bool isAlive { get
+        {
+            return health > 0;
+        } }
+
+    PlayerData data;
+    private void Start()
+    {
+        data = GetComponent<PlayerData>();
+    }
     [Command(requiresAuthority = false)]
-    public void TakeDmg(float dmg)
+    public void TakeDmg(float dmg,PlayerData source)
     {
         
         health -= dmg;
         if(health < 0)
         {
+            source.kills++;
+            data.deaths++;
             RpcDie();
             if(GetComponent<PlayerMove>()!=null)
             StartCoroutine("RespawnIe",GetComponent<NetworkIdentity>().connectionToClient);
@@ -40,6 +51,7 @@ public class Health : NetworkBehaviour
     [TargetRpc]
     void RpcMoveToSpawn(NetworkConnection target)
     {
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.position = NetworkManager.startPositions[Random.Range(0, NetworkManager.startPositions.Count)].position;
     }
 

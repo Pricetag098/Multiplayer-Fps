@@ -685,6 +685,7 @@ MonoBehaviour:
   spawnPrefabs: []
   timeInterpolationGui: 0
   nameIn: {fileID: 417850432}
+  playerManager: {fileID: 0}
 --- !u!114 &6138976231707897881
 MonoBehaviour:
   m_ObjectHideFlags: 0

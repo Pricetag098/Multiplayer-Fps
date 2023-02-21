@@ -19,7 +19,6 @@ MonoBehaviour:
     m_Bits: 1
   camHeight: 1
   camRotX: 13.400003
-  coolDown: 1
   entryBoost: 300
   gravityScale: 3
   checkDist: 2
@@ -28,7 +27,7 @@ MonoBehaviour:
   minMvSpeed: 0
   maxFallSpeed: 39.2
   stickForce: 10
-  exitVel: {x: 1000, y: 1200, z: 1500}
+  exitVel: {x: 1000, y: 1600, z: 1500}
   wallLayer:
     serializedVersion: 2
     m_Bits: 1

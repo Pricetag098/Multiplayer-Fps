@@ -18,6 +18,6 @@ public class BarrelRotate : MonoBehaviour
     [ContextMenu("Go")]
     public void Rotate()
     {
-        transform.RotateAround(transform.right, 360 / 6);
+        transform.Rotate(transform.right, 360 / 6);
     }
 }

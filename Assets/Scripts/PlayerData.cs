@@ -7,6 +7,7 @@ public class PlayerData : NetworkBehaviour
 {
     public GameObject clientBody;
     public GameObject serverBody;
+    public GameObject clientUi;
     public GameObject cam;
     public Gun gun;
     public TextMeshProUGUI playerName;
@@ -25,11 +26,25 @@ public class PlayerData : NetworkBehaviour
         pm.cam.GetComponent<AudioListener>().enabled = isLocalPlayer;
         pm.cam.parent = null;
         pm.cam.gameObject.name = gameObject.name + "Cam";
-        GetComponent<GrenadeThrow>().enabled = isLocalPlayer;
+        if (isLocalPlayer)
+        {
+            transform.position = NetworkManager.startPositions[Random.Range(0, NetworkManager.startPositions.Count)].position;
+        }
+        //GetComponent<GrenadeThrow>().enabled = isLocalPlayer;
         clientBody.SetActive(isLocalPlayer);
+        clientUi.SetActive(isLocalPlayer);
         serverBody.SetActive(!isLocalPlayer);
         gun.enabled = isLocalPlayer;
+        if (isLocalPlayer)
+        {
+            gun.EnablePP();
+        }
         CmdGetName();
+        if (isServer)
+        {
+            //NetManager.singleton.playerManager.players.Add(this);
+            
+        }
     }
     [Command(requiresAuthority = false)]
     void CmdGetName()
@@ -45,6 +60,11 @@ public class PlayerData : NetworkBehaviour
 	private void OnDestroy()
 	{
 		Destroy(cam);
+        if (isServer)
+        {
+            Debug.Log("A");
+            //NetManager.singleton.playerManager.players.Remove(this);
+        }
 	}
     
 

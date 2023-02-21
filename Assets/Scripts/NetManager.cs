@@ -14,7 +14,7 @@ public class NetManager : NetworkManager
     public TMP_InputField nameIn;
     // Overrides the base singleton so we don't
     // have to cast to this type everywhere.
-    List<PlayerData> players = new List<PlayerData>();
+    public PlayerManager playerManager;
     public static new NetManager singleton { get; private set; }
 
     /// <summary>
@@ -25,6 +25,7 @@ public class NetManager : NetworkManager
     {
         base.Awake();
         singleton = this;
+        playerManager = GetComponent<PlayerManager>();
     }
 
     #region Unity Callbacks
@@ -263,6 +264,12 @@ public class NetManager : NetworkManager
         GameObject player = Instantiate(playerPrefab);
         PlayerData netPlayer = player.GetComponent<PlayerData>();
         netPlayer.playerNameStr = msg.name;
+        if (msg.name == "")
+        {
+            netPlayer.playerNameStr = "Guest";
+        }
+        player.name = "Player: "+conn.connectionId;
+        //player.transform.position = startPositions[startPositions.Count].position;
         NetworkServer.AddPlayerForConnection(conn, player);
     }
 }
