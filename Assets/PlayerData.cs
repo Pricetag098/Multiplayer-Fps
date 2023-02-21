@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using TMPro;
-public class NetworkedPlayer : NetworkBehaviour
+public class PlayerData : NetworkBehaviour
 {
     public GameObject clientBody;
     public GameObject serverBody;
@@ -11,6 +11,9 @@ public class NetworkedPlayer : NetworkBehaviour
     public Gun gun;
     public TextMeshProUGUI playerName;
     public string playerNameStr;
+    [SyncVar] public int kills = 0;
+    [SyncVar] public int deaths = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +46,6 @@ public class NetworkedPlayer : NetworkBehaviour
 	{
 		Destroy(cam);
 	}
-
+    
 
 }

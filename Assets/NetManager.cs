@@ -14,7 +14,7 @@ public class NetManager : NetworkManager
     public TMP_InputField nameIn;
     // Overrides the base singleton so we don't
     // have to cast to this type everywhere.
-    List<NetworkedPlayer> players = new List<NetworkedPlayer>();
+    List<PlayerData> players = new List<PlayerData>();
     public static new NetManager singleton { get; private set; }
 
     /// <summary>
@@ -261,7 +261,7 @@ public class NetManager : NetworkManager
     void OnCreateCharacter(NetworkConnectionToClient conn, CreatePlayerMessage msg)
     {
         GameObject player = Instantiate(playerPrefab);
-        NetworkedPlayer netPlayer = player.GetComponent<NetworkedPlayer>();
+        PlayerData netPlayer = player.GetComponent<PlayerData>();
         netPlayer.playerNameStr = msg.name;
         NetworkServer.AddPlayerForConnection(conn, player);
     }
