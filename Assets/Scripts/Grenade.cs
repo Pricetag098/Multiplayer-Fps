@@ -12,27 +12,27 @@ public class Grenade : MonoBehaviour
     public float force = 1000;
     public float checkAngle = 15;
     public int rayCount = 360 ;
-    Light light;
+    Light lightComp;
     Vector3 testdir;
     ParticleSystem particle;
     
     // Start is called before the first frame update
     void Start()
     {
-        light = GetComponentInChildren<Light>();
+        lightComp = GetComponentInChildren<Light>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        light.intensity = Mathf.Sin(Time.time * 50 * (1-(time/maxTime)));
+        lightComp.intensity = Mathf.Sin(Time.time * 50 * (1-(time/maxTime)));
         time -= Time.deltaTime;
         if(time < 0)
         {
             Explode();
             GetComponentInChildren<ParticleSystem>().Play();
-            light.enabled = false;
+            lightComp.enabled = false;
             GetComponent<Collider>().enabled = false;
             GetComponent<MeshRenderer>().enabled = false;
         }

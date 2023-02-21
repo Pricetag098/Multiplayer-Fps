@@ -8,7 +8,7 @@ namespace MoveStates
 	[CreateAssetMenu(fileName = "MvState", menuName = "MoveStates/WallRun")]
 	public class MsWallRun : MoveState
 	{
-        [SerializeField] float coolDown = 1;
+        //[SerializeField] float coolDown = 1;
         [SerializeField] float entryBoost;
 		[SerializeField] float gravityScale;
         [SerializeField] float checkDist;
