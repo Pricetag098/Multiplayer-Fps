@@ -452,6 +452,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multi: 0.75
+--- !u!1 &953154731171789057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6666629623899888519}
+  - component: {fileID: 345437414987590443}
+  m_Layer: 3
+  m_Name: Gun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6666629623899888519
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953154731171789057}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7245816123012251774}
+  m_Father: {fileID: 947886667955570388}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &345437414987590443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953154731171789057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79b901fc7646ec45ad37365cd8b68f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: 60
+  particle: {fileID: 6381682494573294407}
+  owner: {fileID: 5408740611622160600}
+  fireRate: 1
+  scopeSpeedFov: 200
+  scopeSpeedPP: 10
+  adsMvSpeed: 10
+  health: {fileID: 3323117619273527907}
+  validLayers:
+    serializedVersion: 2
+    m_Bits: 191
+  pp: {fileID: 0}
+  basePos: {x: 0, y: 0, z: 0}
+  adsPos: {x: -0.2, y: 0, z: 0}
 --- !u!1 &1104558349597570388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,7 +1804,7 @@ MonoBehaviour:
   clientUi: {fileID: 0}
   clientCam: {fileID: 8901435273432997079}
   serverCam: {fileID: 588657787854281754}
-  gun: {fileID: 3540221201409555934}
+  gun: {fileID: 345437414987590443}
   playerName: {fileID: 6034072618809483591}
   playerNameStr: 
   kills: 0
@@ -9107,7 +9166,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 963194228}
-  - {fileID: 7245816123012251774}
+  - {fileID: 6666629623899888519}
   m_Father: {fileID: 5080832778545016827}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9211,7 +9270,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 947886667955570388}
+    m_TransformParent: {fileID: 6666629623899888519}
     m_Modifications:
     - target: {fileID: 100002, guid: a38f0fefbda80564b890ac759138031b, type: 3}
       propertyPath: m_IsActive
@@ -9227,7 +9286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400022, guid: a38f0fefbda80564b890ac759138031b, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400022, guid: a38f0fefbda80564b890ac759138031b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9321,30 +9380,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100022, guid: a38f0fefbda80564b890ac759138031b, type: 3}
   m_PrefabInstance: {fileID: 7245816123012651752}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3540221201409555934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7245816123012553822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b79b901fc7646ec45ad37365cd8b68f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmg: 60
-  particle: {fileID: 6381682494573294407}
-  owner: {fileID: 5408740611622160600}
-  fireRate: 1
-  scopeSpeedFov: 200
-  scopeSpeedPP: 10
-  health: {fileID: 3323117619273527907}
-  validLayers:
-    serializedVersion: 2
-    m_Bits: 191
-  pp: {fileID: 0}
---- !u!114 &4375704394683464712
+--- !u!114 &8402021657979151611
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9356,5 +9392,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24478923048805249bae15929769d9f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectStr: 0
   resetStr: 10
+  fxStr: {x: 0.2, y: 0.2, z: -0.5}

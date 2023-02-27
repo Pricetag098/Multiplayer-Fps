@@ -31,11 +31,15 @@ public class Health : NetworkBehaviour
             }
             
             RpcDie();
-            RpcDeathScreen(GetComponent<NetworkIdentity>().connectionToClient,source);
-            if(GetComponent<PlayerData>())
-            RpcUpdateKillfeed(source, GetComponent<PlayerData>());
-            if (GetComponent<PlayerMove>()!=null)
-            StartCoroutine("RespawnIe",GetComponent<NetworkIdentity>().connectionToClient);
+            if (GetComponent<PlayerData>())
+            {
+                RpcDeathScreen(GetComponent<NetworkIdentity>().connectionToClient, source);
+
+                RpcUpdateKillfeed(source, GetComponent<PlayerData>());
+                if (GetComponent<PlayerMove>() != null)
+                    StartCoroutine("RespawnIe", GetComponent<NetworkIdentity>().connectionToClient);
+            }
+                
         }
         
     }

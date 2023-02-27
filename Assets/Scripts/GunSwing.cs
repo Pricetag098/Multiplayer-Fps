@@ -11,7 +11,7 @@ public class GunSwing : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        initalRot = transform.rotation;
+        initalRot = transform.localRotation;
     }
 
     // Update is called once per frame

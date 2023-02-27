@@ -66,7 +66,7 @@ public class PlayerData : NetworkBehaviour
 	}
 	private void OnDestroy()
 	{
-        if(GetComponent<PlayerMove>().cam.gameObject)
+        if(GetComponent<PlayerMove>().cam)
 		Destroy(GetComponent<PlayerMove>().cam.gameObject);
         if (isServer)
         {
