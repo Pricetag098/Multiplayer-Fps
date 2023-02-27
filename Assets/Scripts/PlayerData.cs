@@ -7,8 +7,9 @@ public class PlayerData : NetworkBehaviour
 {
     public GameObject clientBody;
     public GameObject serverBody;
-    public GameObject clientUi;
-    public GameObject cam;
+    public PlayerUi clientUi;
+    public GameObject clientCam;
+    public GameObject serverCam;
     public Gun gun;
     public TextMeshProUGUI playerName;
     public string playerNameStr;
@@ -22,22 +23,28 @@ public class PlayerData : NetworkBehaviour
         PlayerMove pm = GetComponent<PlayerMove>();
         pm.enabled = isLocalPlayer;
         //pm.cam = isLocalPlayer? Camera.main.transform : null;
-        pm.cam.GetComponent<Camera>().enabled = isLocalPlayer;
-        pm.cam.GetComponent<AudioListener>().enabled = isLocalPlayer;
+        //pm.cam.GetComponent<Camera>().enabled = isLocalPlayer;
+        //pm.cam.GetComponent<AudioListener>().enabled = isLocalPlayer;
+        clientCam.SetActive(isLocalPlayer);
+        serverCam.SetActive(!isLocalPlayer);
         pm.cam.parent = null;
-        pm.cam.gameObject.name = gameObject.name + "Cam";
+        pm.cam.gameObject.name = gameObject.name + " Cam";
         if (isLocalPlayer)
         {
             transform.position = NetworkManager.startPositions[Random.Range(0, NetworkManager.startPositions.Count)].position;
         }
         //GetComponent<GrenadeThrow>().enabled = isLocalPlayer;
         clientBody.SetActive(isLocalPlayer);
-        clientUi.SetActive(isLocalPlayer);
+        NetManager netManager = (NetManager)NetworkManager.singleton;
+        clientUi = netManager.playerUi;
+        //clientUi.gameObject.SetActive(isLocalPlayer);
+        
         serverBody.SetActive(!isLocalPlayer);
         gun.enabled = isLocalPlayer;
         if (isLocalPlayer)
         {
-            gun.EnablePP();
+            gun.pp = clientUi.scopePp;
+            clientUi.healthBar.health = GetComponent<Health>();
         }
         CmdGetName();
         if (isServer)
@@ -59,7 +66,8 @@ public class PlayerData : NetworkBehaviour
 	}
 	private void OnDestroy()
 	{
-		Destroy(cam);
+        if(GetComponent<PlayerMove>().cam.gameObject)
+		Destroy(GetComponent<PlayerMove>().cam.gameObject);
         if (isServer)
         {
             Debug.Log("A");

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] Health health;
+    public Health health;
     Image img;
     // Start is called before the first frame update
     void Start()
@@ -16,6 +16,7 @@ public class HealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(health != null)
         img.fillAmount = health.health / health.maxHealth;
     }
 }

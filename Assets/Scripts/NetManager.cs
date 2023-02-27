@@ -12,6 +12,7 @@ API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkManager.html
 public class NetManager : NetworkManager
 {
     public TMP_InputField nameIn;
+    public PlayerUi playerUi;
     // Overrides the base singleton so we don't
     // have to cast to this type everywhere.
     public PlayerManager playerManager;

@@ -24,13 +24,26 @@ public class Health : NetworkBehaviour
         health -= dmg;
         if(health < 0)
         {
-            source.kills++;
-            data.deaths++;
+            if(data != null)
+            {
+                source.kills++;
+                data.deaths++;
+            }
+            
             RpcDie();
-            if(GetComponent<PlayerMove>()!=null)
+            RpcDeathScreen(GetComponent<NetworkIdentity>().connectionToClient,source);
+            if(GetComponent<PlayerData>())
+            RpcUpdateKillfeed(source, GetComponent<PlayerData>());
+            if (GetComponent<PlayerMove>()!=null)
             StartCoroutine("RespawnIe",GetComponent<NetworkIdentity>().connectionToClient);
         }
         
+    }
+    [ClientRpc]
+    public void RpcUpdateKillfeed(PlayerData killer, PlayerData dead)
+    {
+        NetManager netManager = (NetManager)NetworkManager.singleton;
+        netManager.playerUi.killFeed.OnKill(killer, dead);
     }
     [ClientRpc]
     public void RpcDie()
@@ -54,7 +67,13 @@ public class Health : NetworkBehaviour
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.position = NetworkManager.startPositions[Random.Range(0, NetworkManager.startPositions.Count)].position;
     }
-
+    [TargetRpc]
+    void RpcDeathScreen(NetworkConnection target,PlayerData data)
+    {
+        NetManager netManager = (NetManager)NetworkManager.singleton;
+        netManager.playerUi.respawnScreen.gameObject.SetActive(true);
+        netManager.playerUi.respawnScreen.OnDie(respawnTimer,data.playerNameStr);
+    }
     [TargetRpc]
     void RpcSetMv(NetworkConnection target,bool state)
 	{

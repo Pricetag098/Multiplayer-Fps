@@ -12,21 +12,12 @@ public class Gun : MonoBehaviour
     public PlayerData owner;
     [SerializeField] float fireRate =1,scopeSpeedFov=1,scopeSpeedPP =1;
     [SerializeField]Health health;
-    Volume pp;
+    [SerializeField] LayerMask validLayers;
+    public Volume pp;
     float cooldown = 0;
     // Start is called before the first frame update
-    void Awake()
-    {
-        pp = GetComponentInChildren<Volume>();
-    }
-    private void OnDisable()
-    {
-        Destroy(pp);
-    }
-    public void EnablePP()
-    {
-        pp.enabled = true;
-    }
+    
+    
     // Update is called once per frame
     void Update()
     {
@@ -36,7 +27,7 @@ public class Gun : MonoBehaviour
             cooldown = fireRate;
             particle.Play();
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit,float.PositiveInfinity,validLayers))
             {
                 //Debug.Log(hit.collider.gameObject.name);
                 if (hit.collider.gameObject.GetComponent<HitBox>())
@@ -48,12 +39,14 @@ public class Gun : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             Camera.main.fieldOfView = Mathf.MoveTowards(Camera.main.fieldOfView, 60/4, Time.deltaTime * scopeSpeedFov);
+            if(pp!=null)
             pp.weight = Mathf.MoveTowards(pp.weight, 1, Time.deltaTime * scopeSpeedPP);
             MoveState.sensitivity = 0.5f;
         }
         if (!Input.GetMouseButton(1))
         {
             Camera.main.fieldOfView = Mathf.MoveTowards(Camera.main.fieldOfView, 60, Time.deltaTime * scopeSpeedFov);
+            if(pp != null)
             pp.weight = Mathf.MoveTowards(pp.weight, 0, Time.deltaTime * scopeSpeedPP);
             MoveState.sensitivity = 1f;
         }
