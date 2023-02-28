@@ -18,9 +18,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   camHeight: 0.5
+  useCrouchAnimation: 1
   camRotX: -0.0000036805868
   gravityScale: 78.4
   jumpForce: 1600
-  inAir: 4
+  inAir: 5
   running: 0
   crouch: 3

@@ -18,6 +18,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   camHeight: 0.5
+  useCrouchAnimation: 1
   camRotX: 9.95
   gravityScale: 39.2
   wallCheckDist: 1

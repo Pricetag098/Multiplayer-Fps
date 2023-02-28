@@ -9,11 +9,14 @@ namespace MoveStates
 	public class MoveState : ScriptableObject
 	{
 		protected PlayerMove player;
+
 		public static float sensitivity =1;
 		[SerializeField] protected float gcCheckDist = .61f;
 		[SerializeField] protected float gcRad = .4f;
 		[SerializeField] protected LayerMask groundLayer = 1;
 		[SerializeField] protected float camHeight = 1;
+
+		public bool useCrouchAnimation;
 		public void OnEnterState(PlayerMove p)
 		{
 			player = p;

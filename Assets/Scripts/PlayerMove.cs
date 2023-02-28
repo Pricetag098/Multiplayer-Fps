@@ -26,7 +26,10 @@ public class PlayerMove : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-
+    public bool UseCrouchAnim()
+    {
+        return state.useCrouchAnimation;
+    }
     // Update is called once per frame
     void Update()
     {
