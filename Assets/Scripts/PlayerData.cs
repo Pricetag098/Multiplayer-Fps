@@ -10,6 +10,7 @@ public class PlayerData : NetworkBehaviour
     public PlayerUi clientUi;
     public GameObject clientCam;
     public GameObject serverCam;
+    public ObjectPooler gunTrails;
     public Gun gun;
     public TextMeshProUGUI playerName;
     public string playerNameStr;
@@ -74,6 +75,19 @@ public class PlayerData : NetworkBehaviour
             //NetManager.singleton.playerManager.players.Remove(this);
         }
 	}
-    
+    [Command]
+    public void CmdSpawnBulletTrails(Vector3 start,Vector3 end)
+    {
+        RpcSpawnBulletTrails(start,end);
+    }
+    [ClientRpc]
+    void RpcSpawnBulletTrails(Vector3 start, Vector3 end)
+    {
+        GameObject trailGo = gunTrails.SpawnObj();
+        LineRenderer lr = trailGo.GetComponent<LineRenderer>();
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
+        trailGo.GetComponent<BulletTrail>().Spawn();
+    }
 
 }

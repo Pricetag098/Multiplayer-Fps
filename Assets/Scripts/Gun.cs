@@ -9,6 +9,7 @@ public class Gun : MonoBehaviour
 {
     public float dmg;
     public ParticleSystem particle;
+    public Transform leftHandIk, rightHandIk;
     public PlayerData owner;
     [SerializeField] float fireRate =1,scopeSpeedFov=1,scopeSpeedPP =1,adsMvSpeed = 1;
     [SerializeField]Health health;
@@ -39,6 +40,11 @@ public class Gun : MonoBehaviour
                 {
                     hit.collider.gameObject.GetComponent<HitBox>().OnHit(dmg,owner);
                 }
+                owner.CmdSpawnBulletTrails(particle.transform.position, hit.point);
+            }
+            else
+            {
+                owner.CmdSpawnBulletTrails(particle.transform.position, Camera.main.transform.position + Camera.main.transform.forward * 1000);
             }
         }
         if (Input.GetMouseButton(1))
