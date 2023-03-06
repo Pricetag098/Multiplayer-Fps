@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using Mirror;
 using UnityEngine;
 
-public class Grenade : MonoBehaviour
+public class Grenade : NetworkBehaviour
 {
+    
     public float maxTime=5;
+    public float damage = 100;
     public float time = 5;
     public LayerMask targets;
     public float rad = 5;
@@ -15,6 +17,7 @@ public class Grenade : MonoBehaviour
     Light lightComp;
     Vector3 testdir;
     ParticleSystem particle;
+    public PlayerData playerData;
     
     // Start is called before the first frame update
     void Start()
@@ -28,7 +31,7 @@ public class Grenade : MonoBehaviour
         
         lightComp.intensity = Mathf.Sin(Time.time * 50 * (1-(time/maxTime)));
         time -= Time.deltaTime;
-        if(time < 0)
+        if(time < 0 && isServer)
         {
             Explode();
             GetComponentInChildren<ParticleSystem>().Play();
@@ -55,6 +58,14 @@ public class Grenade : MonoBehaviour
                 if(Physics.Raycast(transform.position,rayDir, out hit, rad))
                 {
                     Rigidbody targetBody = hit.collider.GetComponent<Rigidbody>();
+                    if(targetBody == null)
+					{
+                        HitBox hb = hit.collider.gameObject.transform.GetComponent<HitBox>();
+                        if(hb != null)
+						{
+                            targetBody = hb.health.GetComponent<Rigidbody>();
+						}
+					}
                     if(targetBody != null)
                     {
                         if (!bodies.Contains(targetBody))
@@ -68,10 +79,31 @@ public class Grenade : MonoBehaviour
         }
         foreach(Rigidbody body in bodies)
         {
-            body.AddExplosionForce(force,transform.position,rad);
+            Health h = body.GetComponent<Health>();
+            if(h != null)
+			{
+                h.TakeDmg(damage * 1 / Mathf.Pow(Vector3.Distance(body.transform.position, transform.position),2),playerData);
+			}
+            NetworkIdentity id = body.GetComponent<NetworkIdentity>();
+            if(id != null)
+			{
+                RpcKnockBack(id.connectionToClient);
+			}
+			else
+			{
+                body.AddExplosionForce(force, transform.position, rad);
+            }
+            //
         }
-        Destroy(gameObject,.5f);
+        StartCoroutine("Dest");
         //enabled = false;
+    }
+
+    [TargetRpc]
+    void RpcKnockBack(NetworkConnection target)
+	{
+        target.identity.GetComponent<Rigidbody>().AddExplosionForce(force, transform.position, rad);
+
     }
     private void OnDrawGizmos()
     {
@@ -86,6 +118,11 @@ public class Grenade : MonoBehaviour
             Vector3 rayDir = Quaternion.Euler(rand) * testdir;
             Gizmos.DrawRay(transform.position, rayDir);
         }
+    }
+    public IEnumerator Dest()
+	{
+        yield return new WaitForSeconds(.5f);
+        NetworkServer.Destroy(gameObject);
     }
 
 }

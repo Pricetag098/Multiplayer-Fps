@@ -5172,7 +5172,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6962d5eaba8c2e043a0afbe80ce0d950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
   maxTime: 5
+  damage: 100000
   time: 5
   targets:
     serializedVersion: 2
@@ -5181,6 +5185,7 @@ MonoBehaviour:
   force: 5000
   checkAngle: 15
   rayCount: 250
+  playerData: {fileID: 0}
 --- !u!135 &5349144290275711643
 SphereCollider:
   m_ObjectHideFlags: 0
