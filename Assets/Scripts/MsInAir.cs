@@ -14,8 +14,9 @@ namespace MoveStates
 		[SerializeField] float wrMinMvSpeed;
 		[SerializeField] float wrMaxFallSpeed = 9.8f*4;
 		[SerializeField] LayerMask wallLayer = 1;
-		
 
+		[SerializeField] float maxSpeed;
+		[SerializeField] float acceleration;
 		
 
 		[SerializeField] float colOffset = 0;
@@ -23,6 +24,7 @@ namespace MoveStates
 		[Header("States")]
 		[SerializeField] int running;
 		[SerializeField] int wallRun;
+		Vector2 inputDir;
 		public override void EnterState()
 		{
 			
@@ -38,9 +40,11 @@ namespace MoveStates
 			}
 			ControlCamera();
 
+            inputDir.y = Input.GetAxisRaw("Vertical");
+            inputDir.x = Input.GetAxisRaw("Horizontal");
+            inputDir = inputDir.normalized;
 
-            
-			if (Physics.Raycast(player.transform.position, player.transform.right, wallCheckDist,wallLayer) || Physics.Raycast(player.transform.position, -player.transform.right, wallCheckDist, wallLayer))
+            if (Physics.Raycast(player.transform.position, player.transform.right, wallCheckDist,wallLayer) || Physics.Raycast(player.transform.position, -player.transform.right, wallCheckDist, wallLayer))
 			{
 				Vector3 vel = player.rb.velocity;
 				vel.y = 0;
@@ -55,7 +59,15 @@ namespace MoveStates
 		public override void StateFixedUpdate()
 		{
 			player.rb.AddForce(Vector3.down * gravityScale);
-		}
+			if(Vector3.Dot(player.transform.forward * inputDir.y, player.rb.velocity) < maxSpeed * Mathf.Abs(inputDir.y))
+			{
+				player.rb.AddForce(player.transform.forward * acceleration * inputDir.y);
+			}
+            if (Vector3.Dot(player.transform.right * inputDir.x, player.rb.velocity) < maxSpeed * Mathf.Abs(inputDir.x))
+            {
+                player.rb.AddForce(player.transform.right * acceleration * inputDir.x);
+            }
+        }
 
 		public override void OnExitState()
 		{
