@@ -453,6 +453,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multi: 0.75
+  health: {fileID: 0}
 --- !u!1 &953154731171789057
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +511,7 @@ MonoBehaviour:
   health: {fileID: 3323117619273527907}
   validLayers:
     serializedVersion: 2
-    m_Bits: 191
+    m_Bits: 183
   pp: {fileID: 0}
   basePos: {x: 0, y: 0, z: 0}
   adsPos: {x: -0.2, y: -0.1, z: 0}
@@ -733,6 +734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multi: 0.75
+  health: {fileID: 0}
 --- !u!1 &2141414829768068636
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,6 +1404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multi: 2
+  health: {fileID: 0}
 --- !u!1 &3297257844158327903
 GameObject:
   m_ObjectHideFlags: 0
@@ -1685,6 +1688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multi: 1
+  health: {fileID: 0}
 --- !u!1 &3786414621222083944
 GameObject:
   m_ObjectHideFlags: 0
@@ -1810,6 +1814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multi: 1
+  health: {fileID: 0}
 --- !u!1 &3826072238886768605
 GameObject:
   m_ObjectHideFlags: 0
@@ -1989,7 +1994,7 @@ MonoBehaviour:
   syncInterval: 0.1
   grenadePrefab: {fileID: 5349144290275711640, guid: 9d2747b45564bfe4eaf12f8cd3e04036, type: 3}
   spawnOffset: 1
-  throwVel: 10
+  throwVel: 25
   maxTime: 5
   cam: {fileID: 5080832778545016827}
 --- !u!114 &2980750523423537497
@@ -2258,6 +2263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multi: 1
+  health: {fileID: 0}
 --- !u!1 &3927286402779874756
 GameObject:
   m_ObjectHideFlags: 0
@@ -2463,6 +2469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multi: 1
+  health: {fileID: 0}
 --- !u!1 &4760900231703057850
 GameObject:
   m_ObjectHideFlags: 0
@@ -7571,6 +7578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multi: 1
+  health: {fileID: 0}
 --- !u!1 &5689138460286821906
 GameObject:
   m_ObjectHideFlags: 0
@@ -8139,6 +8147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multi: 0.75
+  health: {fileID: 0}
 --- !u!1 &7248918225038400793
 GameObject:
   m_ObjectHideFlags: 0
@@ -8328,6 +8337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multi: 0.75
+  health: {fileID: 0}
 --- !u!1 &7415866118629203247
 GameObject:
   m_ObjectHideFlags: 0
@@ -8403,6 +8413,7 @@ GameObject:
   - component: {fileID: 2998174151848672544}
   - component: {fileID: 6152703373448851434}
   - component: {fileID: 5915252834287669187}
+  - component: {fileID: 4650256985801243680}
   m_Layer: 3
   m_Name: ClientCollision
   m_TagString: Untagged
@@ -8491,6 +8502,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4650256985801243680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7586531642736087186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dadf2b141fbe5b745b5283e80355e279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  multi: 1
+  health: {fileID: 3323117619273527907}
 --- !u!1 &7587330648241302246
 GameObject:
   m_ObjectHideFlags: 0
@@ -9242,6 +9267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multi: 1
+  health: {fileID: 0}
 --- !u!1 &8733621830845554067
 GameObject:
   m_ObjectHideFlags: 0

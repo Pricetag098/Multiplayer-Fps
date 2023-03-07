@@ -5176,12 +5176,12 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   maxTime: 5
-  damage: 100000
+  damage: 200
   time: 5
   targets:
     serializedVersion: 2
-    m_Bits: 8
-  rad: 10
+    m_Bits: 137
+  rad: 20
   force: 5000
   checkAngle: 15
   rayCount: 250

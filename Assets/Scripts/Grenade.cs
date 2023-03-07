@@ -18,7 +18,8 @@ public class Grenade : NetworkBehaviour
     Vector3 testdir;
     ParticleSystem particle;
     public PlayerData playerData;
-    
+    bool exploded = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,16 +32,21 @@ public class Grenade : NetworkBehaviour
         
         lightComp.intensity = Mathf.Sin(Time.time * 50 * (1-(time/maxTime)));
         time -= Time.deltaTime;
-        if(time < 0 && isServer)
+        if(time < 0 && !exploded)
         {
-            Explode();
+            
+            if (isServer)
+            {
+                Explode();
+            }
             GetComponentInChildren<ParticleSystem>().Play();
             lightComp.enabled = false;
             GetComponent<Collider>().enabled = false;
             GetComponent<MeshRenderer>().enabled = false;
+            exploded = true;
         }
     }
-
+    [Server]
     public void Explode()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position,rad,targets);
@@ -57,19 +63,22 @@ public class Grenade : NetworkBehaviour
                 
                 if(Physics.Raycast(transform.position,rayDir, out hit, rad))
                 {
-                    Rigidbody targetBody = hit.collider.GetComponent<Rigidbody>();
-                    if(targetBody == null)
+                    //Debug.Log(hit.collider.name);
+                    Rigidbody targetBody = null;//= hit.collider.GetComponent<Rigidbody>();
+                    HitBox hb = hit.collider.GetComponent<HitBox>();
+                    if (hb != null)
+                    {
+                        targetBody = hb.health.GetComponent<Rigidbody>();
+                    }
+                    if (targetBody == null)
 					{
-                        HitBox hb = hit.collider.gameObject.transform.GetComponent<HitBox>();
-                        if(hb != null)
-						{
-                            targetBody = hb.health.GetComponent<Rigidbody>();
-						}
-					}
+                        targetBody = hit.collider.GetComponent<Rigidbody>();
+                    }
                     if(targetBody != null)
                     {
                         if (!bodies.Contains(targetBody))
                         {
+                            //Debug.Log(targetBody);
                             bodies.Add(targetBody);
                         }
                     }
@@ -82,6 +91,7 @@ public class Grenade : NetworkBehaviour
             Health h = body.GetComponent<Health>();
             if(h != null)
 			{
+                //Debug.Log(h.gameObject.name);
                 h.TakeDmg(damage * 1 / Mathf.Pow(Vector3.Distance(body.transform.position, transform.position),2),playerData);
 			}
             NetworkIdentity id = body.GetComponent<NetworkIdentity>();
@@ -102,6 +112,7 @@ public class Grenade : NetworkBehaviour
     [TargetRpc]
     void RpcKnockBack(NetworkConnection target)
 	{
+        //Debug.Log(target);
         target.identity.GetComponent<Rigidbody>().AddExplosionForce(force, transform.position, rad);
 
     }

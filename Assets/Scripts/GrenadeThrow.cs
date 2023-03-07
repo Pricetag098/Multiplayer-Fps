@@ -41,7 +41,7 @@ public class GrenadeThrow : NetworkBehaviour
                 {
                     //server.
                     //Debug.Log(cam);
-                    SpawnGrenade(time,cam.position,cam.forward);
+                    SpawnGrenade(time,cam.position,cam.forward,rb.velocity);
                     holding = false;
                 }
             }
@@ -49,13 +49,13 @@ public class GrenadeThrow : NetworkBehaviour
        
     }
     [Command]
-    void SpawnGrenade(float t,Vector3 origin, Vector3 dir)
+    void SpawnGrenade(float t,Vector3 origin, Vector3 dir,Vector3 vel)
 	{
         //Debug.Log(origin);
         
         GameObject grenadeGo = Instantiate(grenadePrefab);
         grenadeGo.transform.position = origin + dir * spawnOffset;
-        grenadeGo.GetComponent<Rigidbody>().velocity = Camera.main.transform.forward * throwVel + rb.velocity * .25f;
+        grenadeGo.GetComponent<Rigidbody>().velocity = dir * throwVel + vel * .25f;
         Grenade g = grenadeGo.GetComponent<Grenade>();
         g.maxTime = maxTime;
         g.time = t;

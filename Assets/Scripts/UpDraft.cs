@@ -22,6 +22,7 @@ public class UpDraft : MonoBehaviour
         Rigidbody rb = other.GetComponentInParent<Rigidbody>();
         if(rb != null)
         {
+            if(!rb.isKinematic)
             rigidbodies.Add(rb);
         }
     }
@@ -35,22 +36,28 @@ public class UpDraft : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        foreach(Rigidbody rb in rigidbodies)
+        ///List<Rigidbody> list = new List<Rigidbody>(rigidbodies);
+        
+        for(int i = rigidbodies.Count -1; i > -1; i--)
         {
+            Rigidbody rb = rigidbodies[i];
             if(rb != null)
             {
                 rb.AddForce(transform.up * force * Time.fixedDeltaTime);
+                //list.Add(rb);
             }
             else
             {
-                rigidbodies.Remove(rb);
+                rigidbodies.RemoveAt(i);
             }
+            
             
 
             //Vector3 contDir = rb.position - transform.position;
             //contDir.y = 0;
             //rb.AddForce(-contDir.normalized * Mathf.Pow(Vector3.Distance(rb.transform.position,transform.position),2) * control * Time.fixedDeltaTime);
         }
+        //rigidbodies = list;
     }
 
 }
